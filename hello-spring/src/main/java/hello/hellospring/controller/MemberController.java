@@ -1,5 +1,6 @@
 package hello.hellospring.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/members/new")
-	public String create(MemberForm form) {
+	public String create(MemberForm form) throws SQLException {
 		Member member = new Member();
 		member.setName(form.getName());
 		
@@ -35,7 +36,7 @@ public class MemberController {
 		
 		memberService.join(member);
 		
-		System.out.println("memberService.findMembers().size() = " + memberService.findMembers().size());
+//		System.out.println("memberService.findMembers().size() = " + memberService.findMembers().size());
 		
 		return "redirect:/";
 	}

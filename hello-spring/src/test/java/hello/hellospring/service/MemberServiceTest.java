@@ -3,6 +3,8 @@ package hello.hellospring.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,7 @@ public class MemberServiceTest {
 	}
 	
 	@Test
-	void join() {
+	void join() throws SQLException {
 		// given
 		Member member = new Member();
 		member.setName("spring");
@@ -41,7 +43,7 @@ public class MemberServiceTest {
 	}
 	
 	@Test
-	public void dupJoin() {
+	public void dupJoin() throws SQLException {
 		// given
 		Member member1 = new Member();
 		member1.setName("spring");

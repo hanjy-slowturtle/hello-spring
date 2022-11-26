@@ -1,5 +1,6 @@
 package hello.hellospring.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +17,11 @@ public class MemberService {
 	
 	/**
 	 * 회원 가입
+	 * @throws SQLException 
 	 */
-	public Long join(Member member) {
+	public Long join(Member member) throws SQLException {
 		// 같은 이름이 있는 중복 회원 x
-		validateDuplicateMember(member);
+//		validateDuplicateMember(member);
 		
 		memberRepository.save(member);
 		return member.getId();
