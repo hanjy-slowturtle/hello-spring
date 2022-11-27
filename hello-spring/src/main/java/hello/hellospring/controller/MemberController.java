@@ -42,7 +42,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/members")
-	public String list(Model model) {
+	public String list(Model model) throws SQLException {
 		List<Member> members = memberService.findMembers();
 		model.addAttribute("members", members);
 		return "members/memberList";

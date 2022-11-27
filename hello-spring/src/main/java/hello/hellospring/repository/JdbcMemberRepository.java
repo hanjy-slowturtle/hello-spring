@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,21 +58,110 @@ public class JdbcMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public Optional<Member> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Member> findById(Long id) throws SQLException {
+		String sql = "select id, name from member where id = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			Member member = new Member();
+			if (rs.next()) {
+				member.setId(rs.getLong(1));
+				member.setName(rs.getString(2));
+			}
+			return Optional.of(member);
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
 	}
 
 	@Override
-	public Optional<Member> findByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Member> findByName(String name) throws SQLException {
+		String sql = "select id, name from member where name = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, name);
+			
+			rs = pstmt.executeQuery();
+			
+			Member member = new Member();
+			if (rs.next()) {
+				member.setId(rs.getLong(1));
+				member.setName(rs.getString(2));
+				return Optional.of(member);
+			} else {
+				return Optional.empty();
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
 	}
 
 	@Override
-	public List<Member> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Member> findAll() throws SQLException {
+		String sql = "select id, name from member";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			List<Member> list = new ArrayList<>();
+			if (rs.next()) {
+				Member member = new Member();
+				member.setId(rs.getLong(1));
+				member.setName(rs.getString(2));
+				list.add(member);
+			}
+			return list;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
 	}
 	
 }

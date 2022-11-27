@@ -21,13 +21,13 @@ public class MemberService {
 	 */
 	public Long join(Member member) throws SQLException {
 		// 같은 이름이 있는 중복 회원 x
-//		validateDuplicateMember(member);
+		validateDuplicateMember(member);
 		
 		memberRepository.save(member);
 		return member.getId();
 	}
 	
-	private void validateDuplicateMember(Member member) {
+	private void validateDuplicateMember(Member member) throws SQLException {
 		memberRepository.findByName(member.getName())
 			.ifPresent(m -> {
 				throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -37,15 +37,17 @@ public class MemberService {
 	/**
 	 * 전체 회원 조회
 	 * @return
+	 * @throws SQLException 
 	 */
-	public List<Member> findMembers() {
+	public List<Member> findMembers() throws SQLException {
 		return memberRepository.findAll();
 	}
 	
 	/**
 	 * 회원 조회
+	 * @throws SQLException 
 	 */
-	public Optional<Member> findOne(Long memberId) {
+	public Optional<Member> findOne(Long memberId) throws SQLException {
 		return memberRepository.findById(memberId);
 	}
 }

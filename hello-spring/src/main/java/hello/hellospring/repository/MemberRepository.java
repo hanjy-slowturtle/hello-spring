@@ -9,7 +9,7 @@ import hello.hellospring.domain.Member;
 public interface MemberRepository {
 	
 	Member save(Member member) throws SQLException;
-	Optional<Member> findById(Long id);
-	Optional<Member> findByName(String name);
-	List<Member> findAll();
+	Optional<Member> findById(Long id) throws SQLException;
+	Optional<Member> findByName(String name) throws SQLException;
+	List<Member> findAll() throws SQLException;
 }
