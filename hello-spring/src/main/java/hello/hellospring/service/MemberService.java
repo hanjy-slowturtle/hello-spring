@@ -23,17 +23,11 @@ public class MemberService {
 	 * @throws SQLException 
 	 */
 	public Long join(Member member) throws SQLException {
-		long start = System.currentTimeMillis();
-		try {
-			// 같은 이름이 있는 중복 회원 x
-			validateDuplicateMember(member);
-			
-			memberRepository.save(member);
-			return member.getId();
-		} finally {
-			long timeMs = System.currentTimeMillis() - start;
-			System.out.println("join = " + timeMs + "ms");
-		}
+		// 같은 이름이 있는 중복 회원 x
+		validateDuplicateMember(member);
+		
+		memberRepository.save(member);
+		return member.getId();
 	}
 	
 	private void validateDuplicateMember(Member member) throws SQLException {
@@ -49,13 +43,7 @@ public class MemberService {
 	 * @throws SQLException 
 	 */
 	public List<Member> findMembers() throws SQLException {
-		long start = System.currentTimeMillis();
-		try {
-			return memberRepository.findAll();
-		} finally {
-			long timeMs = System.currentTimeMillis() - start;
-			System.out.println("findMembers = " + timeMs + "ms");
-		}
+		return memberRepository.findAll();
 	}
 	
 	/**
